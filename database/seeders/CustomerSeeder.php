@@ -17,8 +17,8 @@ class CustomerSeeder extends Seeder
         $seederIds = json_decode(file_get_contents(storage_path('app/seeder_ids.json')), true);
         $customerIds = $seederIds['customers'] ?? [];
         
-        // Ambil reward random untuk diassign ke customer
-        $rewardGuids = DB::table('rewards')->pluck('guid')->toArray();
+        // Ambil level random untuk diassign ke customer
+        $levelGuids = DB::table('customer_levels')->pluck('guid')->toArray();
         
         // Dummy data untuk customers
         $customers = [
@@ -52,16 +52,21 @@ class CustomerSeeder extends Seeder
             if (isset($customers[$key])) {
                 DB::table('customers')->insert([
                     'guid' => $guid,
-                    'reward_guid' => $rewardGuids[array_rand($rewardGuids)],
+                    'user_guid' => $guid, // User GUID matches customer GUID
                     'first_name' => $customers[$key]['first_name'],
                     'last_name' => $customers[$key]['last_name'],
                     'address' => $customers[$key]['address'],
                     'profile_photo' => $customers[$key]['profile_photo'],
                     'total_waste_sold' => $customers[$key]['total_waste_sold'],
                     'points' => $customers[$key]['points'],
+                    'level_guid' => $levelGuids[array_rand($levelGuids)],
+                    'badges_earned' => json_encode(['recycling_starter', 'first_transaction']),
+                    'total_transactions' => rand(5, 20),
+                    'total_waste_recycled' => $customers[$key]['total_waste_sold'] + rand(10, 50),
+                    'leaderboard_rank' => rand(1, 100),
                     'current_progress' => rand(1, 20),
                     'signature_url' => 'signatures/' . Str::slug($customers[$key]['first_name']) . '.png',
-                    'preferred_payment_method' => array_rand(['bank_transfer', 'e-wallet', 'cash']),
+                    'preferred_payment_method' => rand(0, 2), // Assuming it's an enum or integer field
                     'created_at' => now(),
                     'updated_at' => now(),
                 ]);
