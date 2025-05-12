@@ -13,7 +13,7 @@ A modern banking application built with Laravel 10.
 
 1. Clone the repository:
 ```bash
-git clone https://github.com/yourusername/cycle-bank.git
+git clone https://github.com/mrramdn/cycle-bank.git
 cd cycle-bank
 ```
 
