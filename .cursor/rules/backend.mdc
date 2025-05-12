@@ -1,0 +1,44 @@
+---
+description: 
+globs: 
+alwaysApply: false
+---
+[
+  {
+    "rule": "Semua logic bisnis harus ditempatkan di Service class, bukan di Controller",
+    "appliesTo": ["app/Http/Controllers/**"]
+  },
+  {
+    "rule": "Gunakan Form Request untuk validasi input, jangan validasi langsung di controller",
+    "appliesTo": ["app/Http/Controllers/**"]
+  },
+  {
+    "rule": "Gunakan Resource untuk transformasi response API, bukan array langsung",
+    "appliesTo": ["app/Http/Controllers/**"]
+  },
+  {
+    "rule": "Gunakan dependency injection di constructor untuk service atau repository",
+    "appliesTo": ["app/Http/Controllers/**", "app/Services/**"]
+  },
+  {
+    "rule": "Gunakan Repository Pattern untuk abstraksi data access",
+    "appliesTo": ["app/Repositories/**"]
+  },
+  {
+    "rule": "Gunakan route model binding, hindari query manual di controller",
+    "appliesTo": ["routes/api.php", "routes/web.php"]
+  },
+  {
+    "rule": "Semua file migration harus hanya fokus ke struktur, bukan isi data",
+    "appliesTo": ["database/migrations/**"]
+  },
+  {
+    "rule": "Gunakan Seeder dan Factory untuk data dummy/testing, bukan migration",
+    "appliesTo": ["database/seeders/**"]
+  },
+  {
+    "rule": "Gunakan helper function hanya untuk fungsi pure, jangan letakkan logic berat di sana",
+    "appliesTo": ["app/Helpers/**"]
+  }
+]
+
