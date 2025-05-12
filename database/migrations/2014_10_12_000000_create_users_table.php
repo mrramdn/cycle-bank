@@ -13,7 +13,7 @@ return new class extends Migration
             $table->string('email')->unique();
             $table->string('password');
             $table->string('phone')->unique();
-            $table->enum('role', ['customers', 'waste_banks', 'waste_managers', 'government']);
+            $table->enum('role', ['customer', 'waste_bank', 'waste_manager', 'government']);
             $table->boolean('is_verified')->default(false);
             $table->boolean('is_active')->default(true);
             $table->timestamp('last_login')->nullable();
