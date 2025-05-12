@@ -10,7 +10,7 @@ return new class extends Migration
     {
         Schema::create('customers', function (Blueprint $table) {
             $table->uuid('guid')->primary();
-            $table->uuid('reward_guid');
+            $table->uuid('user_guid');
             $table->string('first_name');
             $table->string('last_name');
             $table->string('address')->nullable();

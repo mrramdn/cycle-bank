@@ -7,10 +7,15 @@ use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 use Illuminate\Notifications\Notifiable;
 use Laravel\Sanctum\HasApiTokens;
+use Illuminate\Database\Eloquent\Concerns\HasUuids;
 
 class User extends Authenticatable
 {
-    use HasApiTokens, HasFactory, Notifiable;
+    use HasApiTokens, HasFactory, Notifiable, HasUuids;
+
+    protected $primaryKey = 'guid';
+    protected $keyType = 'string';
+    public $incrementing = false;
 
     /**
      * The attributes that are mass assignable.
@@ -18,9 +23,16 @@ class User extends Authenticatable
      * @var array<int, string>
      */
     protected $fillable = [
-        'name',
         'email',
         'password',
+        'phone',
+        'role',
+        'is_verified',
+        'is_active',
+        'last_login',
+        'device_fingerprint',
+        'notification_settings',
+        'fcm_token',
     ];
 
     /**
@@ -39,7 +51,18 @@ class User extends Authenticatable
      * @var array<string, string>
      */
     protected $casts = [
-        'email_verified_at' => 'datetime',
+        'is_verified' => 'boolean',
+        'is_active' => 'boolean',
+        'last_login' => 'datetime',
+        'notification_settings' => 'json',
         'password' => 'hashed',
     ];
+    
+    /**
+     * Get the customer profile associated with the user.
+     */
+    public function customer()
+    {
+        return $this->hasOne(Customer::class, 'user_guid', 'guid');
+    }
 }
